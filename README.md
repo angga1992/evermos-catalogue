@@ -1,3 +1,11 @@
+
+<!-- 
+    Author: Angga Mulya Sasmita
+    Role: Frontend Developer
+    Email: anggamulya.ghazy@gmail.com 
+-->
+
+
 # list_product
 
 ## Build Setup

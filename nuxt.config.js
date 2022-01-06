@@ -1,5 +1,13 @@
+const pkg = require('./package')
+require('dotenv').config()
+require('events').EventEmitter.defaultMaxListeners = 53;
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  ssr: true,
+  env: {
+    HOST_URL: process.env.HOST_URL,
+  },
   head: {
     title: 'list_product',
     htmlAttrs: {
@@ -12,12 +20,15 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: "preconnect", href:"https://fonts.googleapis.com" },
+      { rel: "preconnect", href:"https://fonts.gstatic.com"},
+      { href: "https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap", rel:"stylesheet"},
+      { rel: "stylesheet", href:"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"}
     ]
   },
-
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '@/assets/custom.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -25,22 +36,48 @@ export default {
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    "@nuxtjs/dotenv"
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    ['nuxt-lazy-load', {
+      // These are the default values
+      images: true,
+      videos: true,
+      audios: true,
+      iframes: true,
+      native: false,
+      polyfill: true,
+      directiveOnly: false,
+
+      // Default image must be in the static folder
+      defaultImage: '/images/default-image.png',
+
+      // To remove class set value to false
+      loadingClass: 'isLoading',
+      loadedClass: 'isLoaded',
+      appendClass: 'lazyLoad',
+
+      observerConfig: {
+        // See IntersectionObserver documentation
+      }
+    }]
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    proxy: true,
+    proxyHeadersIgnore: ['host', 'accept', 'cf-ray', 'cf-connecting-ip']
+  },
+
+  proxy: {
+    '/product': process.env.HOST_URL,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
