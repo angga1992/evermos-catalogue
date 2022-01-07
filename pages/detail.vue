@@ -1,9 +1,9 @@
 <template>
   <div>
     <div v-if="getDetail && getDetail.length > 0">
-      <button @click="showcase()" type="button" class="btn back_nav">
+      <span @click="showcase()" type="button" class="btn back_nav">
         <i class="fas fa-arrow-left"></i> Back
-      </button>
+      </span>
       <div class="card-wrapper"></div>
       <div class="card">
         <!-- card left -->
@@ -28,14 +28,20 @@
             class="product-link"
             >{{ getDetail[0].brand }}</a
           >
-          <div class="product-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-            <span>4.7(21)</span>
+          <div v-if="getDetail[0].rating !== null" class="product-rating">
+            <span v-for="star in rate" :key="star">
+              <i class="fas fa-star"></i>
+            </span>
+            <i v-if="statDec" class="fas fa-star-half-alt"></i>
+            <span style="color: black">{{ getDetail[0].rating }}</span>
           </div>
+          <button
+            ref="starts"
+            style="display: none"
+            @click="getRate(getDetail[0].rating)"
+          >
+            click
+          </button>
 
           <div class="product-price">
             <p class="new-price">
@@ -106,17 +112,20 @@
 </template>
 
 <script>
-import Spinner from '~/components/loading'
+import Spinner from "~/components/loading";
 export default {
   //   layout: 'showcase',
   components: {
-    Spinner
+    Spinner,
   },
   data() {
     return {
       id: null,
       detailProd: [],
       loading: true,
+      rate: 0,
+      decRate: 0,
+      statDec: false,
     };
   },
   async mounted() {
@@ -124,6 +133,12 @@ export default {
     let temp = this.$route.query.qp;
     this.id = temp.split("-").pop();
     await this.$store.dispatch("fetchDetailProduct", this.id);
+    this.$refs.starts.click();
+  },
+  head() {
+    return {
+      title: this.$route.query.qp,
+    };
   },
   computed: {
     getDetail() {
@@ -132,6 +147,19 @@ export default {
     },
   },
   methods: {
+    getRate(val) {
+      var a = parseFloat(val);
+      let temp = a.toString().split(".")[1];
+      this.rate = a.toString().split(".")[0];
+      this.rate = parseInt(a);
+      this.decRate = parseInt(temp);
+      if (this.decRate > 0) {
+        this.statDec = true;
+      } else {
+        this.statDec = false;
+      }
+      // return this.rate
+    },
     showcase() {
       this.$store.dispatch("clearState");
       this.$router.push({

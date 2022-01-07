@@ -116,12 +116,12 @@ select {
         object-fit: cover;
         // opacity: 1.0;
     }
-    // &:hover {
-    //     // transform: scale(1.1);
-    //     // transition: 0.3s all ease-in-out;
-    //     // opacity: 0.5;
+    &:hover {
+        transform: scale(1.1);
+        transition: 0.3s all ease-in-out;
+        opacity: 0.5;
 
-    // }
+    }
 }
 .product-info {
     padding: 4px;
@@ -182,7 +182,7 @@ select {
     .products {
         .product-card {
             h5 {
-                font-size: 2vw;
+                font-size: 3vw;
             }
             h3 {
                 font-size: 4vw;
@@ -278,7 +278,6 @@ img {
         bottom: 0;
         height: 4px;
         width: 80px;
-        background: #12263a;
     }
 }
 .product-link {
@@ -299,8 +298,10 @@ img {
 .product-rating {
     color: #ffc107;
     span {
-        font-weight: 600;
-        color: #252525;
+        span {
+            font-weight: 600;
+            color: #252525;
+        }
     }
 }
 .product-price {

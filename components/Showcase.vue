@@ -12,9 +12,6 @@
         @click="detail(product.name, product.id)"
       >
         <div class="product-image">
-          <div class="fulltitle">
-            {{ product.name }}
-          </div>
           <img v-lazy-load :src="product.image_link" />
         </div>
         <div class="product-info">

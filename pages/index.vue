@@ -18,5 +18,10 @@ export default {
       return this.$store.getters["getProducts"];
     },
   },
+  head () {
+    return {
+      title: 'Evermos - Product List'
+    }
+  },
 };
 </script>
