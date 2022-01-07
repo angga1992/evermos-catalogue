@@ -4,7 +4,8 @@ require('events').EventEmitter.defaultMaxListeners = 53;
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
-  ssr: true,
+  ssr: false,
+  target: 'static',
   env: {
     HOST_URL: process.env.HOST_URL,
   },
