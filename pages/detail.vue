@@ -1,24 +1,33 @@
 <template>
   <div>
-    <!-- <pre>{{id}}</pre>
-        <pre>{{getDetail}}</pre>
-        <div v-if="getDetail && getDetail.length > 0">
-            <img v-lazy-load :src="getDetail[0].image_link" alt="">
-        </div> -->
-    <div v-if="getDetail && getDetail.length > 0" class="card-wrapper">
+    <div v-if="getDetail && getDetail.length > 0">
+      <button @click="showcase()" type="button" class="btn back_nav">
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+      <div class="card-wrapper"></div>
       <div class="card">
         <!-- card left -->
         <div class="product-imgs">
           <div class="img-display">
             <div class="img-showcase">
-              <img img v-lazy-load :src="getDetail[0].image_link"  alt="shoe image" />
+              <img
+                img
+                v-lazy-load
+                :src="getDetail[0].image_link"
+                alt="shoe image"
+              />
             </div>
           </div>
         </div>
         <!-- card right -->
         <div class="product-content">
-          <h2 class="product-title">{{getDetail[0].name}}</h2>
-          <a :href="getDetail[0].product_link" target="_blank" class="product-link">{{getDetail[0].brand}}</a>
+          <h2 class="product-title">{{ getDetail[0].name }}</h2>
+          <a
+            :href="getDetail[0].product_link"
+            target="_blank"
+            class="product-link"
+            >{{ getDetail[0].brand }}</a
+          >
           <div class="product-rating">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -29,20 +38,36 @@
           </div>
 
           <div class="product-price">
-            <p class="new-price">Price: <span>${{getDetail[0].price}}</span></p>
+            <p class="new-price">
+              Price: <span>${{ getDetail[0].price }}</span>
+            </p>
           </div>
 
           <div class="product-detail">
             <h2>about this item:</h2>
             <p>
-              {{getDetail[0].description}}
+              {{ getDetail[0].description }}
             </p>
-            <ul>
-              <li style="display: flex">Color: <div>{{getDetail[0].product_colors[0].colour_name}}</div><div :style="{ marginLeft: '4px', width: '16px', height: '16px', backgroundColor: getDetail[0].product_colors[0].hex_value}"></div></li>
+            <ul v-if="getDetail[0].product_colors.length">
+              <li style="display: flex">
+                Color:
+                <div>{{ getDetail[0].product_colors[0].colour_name }}</div>
+                <div
+                  :style="{
+                    marginLeft: '4px',
+                    width: '16px',
+                    height: '16px',
+                    backgroundColor: getDetail[0].product_colors[0].hex_value,
+                  }"
+                ></div>
+              </li>
               <li>Available: <span>in stock</span></li>
-              <li>Category: <span>{{getDetail[0].category !== null ? getDetail[0].category : ''}}</span></li>
-              <!-- <li>Shipping Area: <span>All over the world</span></li>
-              <li>Shipping Fee: <span>Free</span></li> -->
+              <li>
+                Category:
+                <span>{{
+                  getDetail[0].category !== null ? getDetail[0].category : ""
+                }}</span>
+              </li>
             </ul>
           </div>
 
@@ -74,27 +99,64 @@
         </div>
       </div>
     </div>
+    <div class="container-elipsis" v-else>
+      <Spinner />
+    </div>
   </div>
 </template>
 
 <script>
+import Spinner from '~/components/loading'
 export default {
-//   layout: 'showcase',
+  //   layout: 'showcase',
+  components: {
+    Spinner
+  },
   data() {
     return {
       id: null,
+      detailProd: [],
+      loading: true,
     };
   },
   async mounted() {
-    console.log(this.$route.query.qp);
+    this.detailProd = [];
     let temp = this.$route.query.qp;
     this.id = temp.split("-").pop();
     await this.$store.dispatch("fetchDetailProduct", this.id);
   },
   computed: {
     getDetail() {
-      return this.$store.getters["getDetailProduct"];
+      this.detailProd = this.$store.getters["getDetailProduct"];
+      return this.detailProd;
+    },
+  },
+  methods: {
+    showcase() {
+      this.$store.dispatch("clearState");
+      this.$router.push({
+        path: "/",
+      });
     },
   },
 };
 </script>
+
+<style scoped>
+.back_nav {
+  margin: 10px;
+  cursor: pointer;
+  position: sticky;
+  top: 0;
+}
+.arrow {
+  border: solid teal;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+</style>

@@ -3,20 +3,20 @@
 </template>
 
 <script>
-import Showcase from '~/components/Showcase'
+import Showcase from "~/components/Showcase";
 export default {
   name: "evermos-catalogue-index",
-  layout: 'showcase',
+  layout: "showcase",
   components: {
-    Showcase
+    Showcase,
   },
   created() {
-    this.$store.dispatch("fetchProduct")
+    this.$store.dispatch("fetchProduct");
   },
   computed: {
-    getProducts () {
-      return this.$store.getters['getProducts']
-    }
-  }
+    getProducts() {
+      return this.$store.getters["getProducts"];
+    },
+  },
 };
 </script>
