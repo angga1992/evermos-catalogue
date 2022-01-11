@@ -4,7 +4,6 @@ require('events').EventEmitter.defaultMaxListeners = 53;
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
-  target: 'static',
   env: {
     HOST_URL: process.env.HOST_URL,
   },
@@ -78,11 +77,6 @@ export default {
 
   proxy: {
     '/product': process.env.HOST_URL,
-  },
-
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  generate: {
-    fallback: true
   },
   build: {
   }
