@@ -142,7 +142,10 @@ select {
     top: 0;
     width: 100%;
     .logo {
-        display: inline-block;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
     }
     ul {
         text-align: center;
