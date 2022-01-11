@@ -2,7 +2,7 @@
   <div>
     <div v-if="getDetail && getDetail.length > 0">
       <span @click="showcase()" type="button" class="btn back_nav">
-        <i class="fas fa-arrow-left"></i> Back
+        <i class="fas fa-arrow-left"></i>
       </span>
       <div class="card-wrapper"></div>
       <div class="card">
@@ -54,6 +54,7 @@
             <p>
               {{ getDetail[0].description }}
             </p>
+            <div class="divider"></div>
             <ul v-if="getDetail[0].product_colors.length">
               <li style="display: flex">
                 Color:
@@ -114,7 +115,7 @@
 <script>
 import Spinner from "~/components/loading";
 export default {
-  //   layout: 'showcase',
+    // layout: 'showcase',
   components: {
     Spinner,
   },
@@ -158,7 +159,6 @@ export default {
       } else {
         this.statDec = false;
       }
-      // return this.rate
     },
     showcase() {
       this.$store.dispatch("clearState");
@@ -176,6 +176,7 @@ export default {
   cursor: pointer;
   position: sticky;
   top: 0;
+  font-size: 30px;
 }
 .arrow {
   border: solid teal;

@@ -141,6 +141,9 @@ select {
     height: 77px;
     top: 0;
     width: 100%;
+    .logo {
+        display: inline-block;
+    }
     ul {
         text-align: center;
         list-style-type: none;
@@ -234,10 +237,12 @@ img {
 }
 .img-display {
     overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
 .img-showcase {
     display: flex;
-    width: 100%;
+    width: 80%;
     transition: all 0.5s ease;
     img {
         min-width: 100%;
@@ -265,7 +270,7 @@ img {
     padding: 2rem 1rem;
 }
 .product-title {
-    font-size: 3rem;
+    font-size: 2rem;
     text-transform: capitalize;
     font-weight: 700;
     position: relative;
@@ -333,6 +338,9 @@ img {
         font-size: 0.9rem;
         padding: 0.3rem;
         opacity: 0.8;
+    }
+    .divider {
+        border: 1px solid #80808038;
     }
     ul {
         margin: 1rem 0;
